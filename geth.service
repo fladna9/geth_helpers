@@ -1,0 +1,12 @@
+[Unit]
+Description=Main net Geth BNB Chain daemon
+Requires=network.target
+StartLimitIntervalSec=20
+
+[Service]
+User=geth
+Group=geth
+Type=simple
+ExecStart=/home/geth/geth --config /home/geth/config.toml --datadir /home/geth/node  --cache 8000 --rpc.allow-unprotected-txs --txlookuplimit 0 --tries-verify-mode none --http --http.addr <NODEIP> --http.port 3334 --http.api eth,net,web3 --ws --ws.addr <NODEIP> --ws.port 3333 --ws.api eth,net,web3 --metrics --metrics.influxdb --metrics.influxdb.endpoint "http://0.0.0.0:8086" --metrics.influxdb.database "mainnet" --metrics.influxdb.username "<DBUSER>" --metrics.influxdb.password "<DBPASS>"
+TimeoutSec=60
+Restart=on-failure
