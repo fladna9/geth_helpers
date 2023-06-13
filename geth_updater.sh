@@ -6,6 +6,7 @@ WORKDIR="/home/geth"
 function main() {
         updateGeth
         updateStaticNodes
+        systemctl restart geth
 }
 
 function updateGeth() {
