@@ -1,12 +1,11 @@
 #!/bin/bash
-#Geth updater and Static nodes updater for BNB Chain
-#Set Node location, must have geth ELF and config.toml
+#Geth updater
+#Static nodes API
 WORKDIR="/home/geth"
 
 function main() {
         updateGeth
         updateStaticNodes
-        systemctl restart geth
 }
 
 function updateGeth() {
@@ -18,9 +17,10 @@ function updateGeth() {
 }
 
 function updateStaticNodes() {
+        cd "$WORKDIR"
         StaticNodes=$(curl https://api.binance.org/v1/discovery/peers | sed -r 's/^.{9}//' | sed -r 's/.{1}$//')
         sed -i "/StaticNodes = /c\StaticNodes = $StaticNodes" config.toml
-
+        cd -
 }
 
 main $@
